@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Management in Python | Jonathon Vandezande</title>
+    <meta name="description" content="Why packaging in Python is such a mess, and what is being done about it.">
+    <meta name="author" content="Jonathon Vandezande">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Package Management in Python">
+    <meta property="og:description" content="Why packaging in Python is such a mess, and what is being done about it.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;blog&#x2F;package-management-in-python&#x2F;">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://jevandezande.github.io/main.css">
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://jevandezande.github.io/rss.xml">
+
+    
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="site-header">
+            <div class="header-inner">
+                <a href="https:&#x2F;&#x2F;jevandezande.github.io" class="site-title">Jonathon Vandezande</a>
+                <nav class="nav-menu">
+                    <a href="https://jevandezande.github.io/blog/" class="nav-link active">Blog</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="content-inner">
+                
+<article class="post">
+    <header class="post-header">
+        <h1 class="post-title">Package Management in Python</h1>
+        <div class="post-meta">
+            <span class="post-date">
+                <time datetime="2026-02-09">February 09, 2026</time>
+            </span>
+            
+            <span class="post-reading-time">7 min read</span>
+            
+        </div>
+        
+        <div class="post-tags">
+            
+            <a href="https://jevandezande.github.io/tags/python/" class="tag">python</a>
+            
+            <a href="https://jevandezande.github.io/tags/pypi/" class="tag">pypi</a>
+            
+            <a href="https://jevandezande.github.io/tags/conda/" class="tag">conda</a>
+            
+            <a href="https://jevandezande.github.io/tags/pixi/" class="tag">pixi</a>
+            
+            <a href="https://jevandezande.github.io/tags/uv/" class="tag">uv</a>
+            
+        </div>
+        
+    </header>
+
+    <div class="post-content prose">
+        <p>Python packaging is a strange beast; the ecosystem of packages is one of the things that makes Python both so amazing and frustrating.</p>
+<figure>
+    <img src="/blog/package-management-in-python/xkcd-353.png" alt="I wrote 20 short programs in Python yesterday. It was wonderful. Perl, I'm leaving you."; width="400px" />
+    <figcaption>Importing antigravity in Python in 2007, <a href="https://xkcd.com/353">xkcd.com/353</a></figcaption>
+</figure>
+<p>Python was not originally designed with packaging in mind. While <em>ad hoc</em> sharing of code regularly occurred from its beginning, a built-in method to package Python code via distutils was not available until <a href="https://www.python.org/download/releases/1.6.1/">Python 1.6.1</a> in 2000 (a full 9 years after Python was first released). Metadata was standardized in <a href="https://peps.python.org/pep-0241/"><strong>PEP241</strong></a> in 2001 and <a href="https://peps.python.org/pep-0314"><strong>PEP314</strong></a> in 2003, and the official third-party software repository PyPI finally came in 2003 as described in <a href="https://peps.python.org/pep-0301"><strong>PEP301</strong></a> (meanwhile, Perl's CPAN was released in 1995). Automatic declaration and installation of dependencies came with <code>setuptools</code> in 2004. Packages could finally be hosted on PyPI in 2005, but the commonly used <code>pip</code> package installer didn't arrive until 2008 (replacing <code>easy_install</code>).</p>
+<p>Python is used very differently than many of the languages that came before it. Most programmers are not writing long-lived, well-funded applications, but are quickly gluing together existing code (I personally write a lot of code that interfaces with C++ and Fortran applications). It is particularly popular in the scientific community for solving specific problems and then disseminating these solutions; as such, there are often many conflicting dependencies and less focus on maintaining high-quality stand-alone packages (let alone a focus on consistently updating code for the latest versions of dependencies). This leads to particularly fragile ecosystems (as pip installs packages system-wide) and conflicts between package versions as programmers install large numbers of packages with complicated dependency webs.</p>
+<p>Virtualenv was <a href="https://pypi.org/project/virtualenv/#history">released in 2007</a> to provide local installation of packages. This allowed each separate script and application to easily load packages from PyPI without worrying about conflicting packages on the system. However, the ergonomics of it were less than great, and few Python programmers used it. The additional difficulty of distributing multi-language packages was addressed by <a href="https://peps.python.org/pep-0425/"><strong>PEP 425</strong></a> and <a href="https://peps.python.org/pep-0427/"><strong>PEP 427</strong></a>, which were introduced in 2012 to allow targeting of specific platforms and distribution of wheels containing pre-built binaries (replacing the older egg format). Conda was released around the same time to provide a language-agnostic cross-platform environment manager, and many packages and applications switched to it (<a href="https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions">Jake VanderPlas has a good write-up on the need for Conda</a>, and Python's BDFL Guido van Rossum <a href="https://www.youtube.com/watch?v=QjXJLVINsSA&amp;t=3555s">encouraged Conda's development</a>). However, the growth of Python packages, their interleaving dependencies, and the splintering of package managers and environments inevitably led to issues.</p>
+<figure>
+    <img src="/blog/package-management-in-python/xkcd-1987.png" alt="The Python environmental protection agency wants to seal it in a cement chamber, with pictorial messages to future civilizations warning them about the danger of using sudo to install random Python packages."; width="400px" />
+    <figcaption>In 2018 Randall Munroe was frustrated enough with Python to make a <a href="https://xkcd.com/1987">comic about it</a></figcaption>
+</figure>
+<p>Conda and its associated package repository quickly became popular for providing a simple way to download mixed-language packages. The associated conda-forge is also popular for allowing distribution of community developed packages. However, the lack of lockfiles made it impossible to guarantee reproducible builds without specifying the precise version in the environment file (e.g. <code>package=1.2.3-patch45</code>). Conda was also slow at solving for a viable combination of packages, so <a href="https://x.com/wolfvollprecht/status/1110237677738229760">Mamba was released in 2019</a>. Mamba provided parallel package downloads, better dependency solving algorithms, and a C++ rewrite. However, since it tried to be a drop-in replacement for Conda, it did nothing to fix its other shortcomings.</p>
+<p>Various other package and environment managers have come and gone, including <a href="https://pipenv.pypa.io">Pipenv</a>, <a href="https://python-poetry.org">Poetry</a>, <a href="https://hatch.pypa.io/1.12">Hatch</a>, <a href="https://pdm-project.org">PDM</a>, and many others. However, most of them were slow, relied on the system Python, didn't provide lockfiles, or made other mistakes (e.g. Poetry's (in my opinion) ill-fated attempt to encourage the use of caret notation with semantic versioning, <code>^1.2.3</code>). Many of these were also hampered by attempts to be marginal improvements on the status quo, instead of ground-up redesigns of how a developer friendly environment and package manager should be built.</p>
+<h2 id="modern-package-managers">Modern package managers</h2>
+<p>As Python has struggled with packaging, various languages released integrated support for advanced package management, such as golang<sup class="footnote-reference"><a href="#1">1</a></sup> and rust.<sup class="footnote-reference"><a href="#2">2</a></sup> The package managers in these languages (go modules and Cargo) provided simple ways to build, test, and run projects across environments, all while not requiring system-wide library installation. These principles have influenced many subsequent languages, and the development of the two leading modern Python package managers (ironically, both of which are not even at version 1.0).</p>
+<p><a href="https://pixi.sh">Pixi</a> (from prefix.dev) was <a href="https://crates.io/crates/pixi/0.1.0">released in August 2023</a>. It provides an isolated environment for package installation and running. It has the ability to easily install packages from both PyPI (<a href="https://prefix.dev/blog/uv_in_pixi">via rip and then uv</a>) and Conda (via <a href="https://github.com/conda/rattler">rattler</a>). Multiple environments can be set up, allowing the separation of development tools from package dependencies. The platforms of interest (e.g. <code>linux-64</code>, <code>osx-arm64</code> ) can be selected to ensure that the lockfile contains the correct combinations of packages to build on all requested platforms. Pixi also provides simple ways to run tasks via the <code>pixi run</code> syntax, simplifying the running of complicated commands (e.g. <code>pixi shell -e dev ruff check . --fix</code> to <code>pixi run lint</code>).</p>
+<p><a href="https://github.com/astral-sh/uv">uv</a> (from <a href="https://astral.sh">Astral</a>) was released in February 2024, explicitly trying to be the <a href="https://astral.sh/blog/uv">"Cargo for Python"</a>. uv eschews installation of Conda packages and only installs packages from PyPI and the recently released <a href="https://astral.sh/blog/introducing-pyx">pyx</a> into isolated package-specific environments. uv also supports CLI, GUI, and plugin entry points (e.g. <code>uv run lint</code> can call <code>ruff check . --fix</code> in the environment).</p>
+<h2 id="selecting-a-package-manager">Selecting a package manager</h2>
+<p>Both Pixi and uv are excellent package managers, but both aim to do slightly different things. Pixi is needed when packages require installation from conda, as is common in scientific Python development. For this reason, Pixi is the package manager for most of <a href="https://rowansci.com">Rowan's</a> applications. However, if a package is Python only and all dependencies can be found on PyPI, uv should probably be preferred due to its significantly faster solution times and excellent build system for distribution on PyPI. Both packages technically have not reached version 1.0, but having used both for a while now, there is nothing I miss in any previous package managers, and Pixi and uv will only continue to improve.</p>
+<p>Of course, there is more than just selecting a package manager; one should also consider setting up their Python package with something like <a href="https://github.com/jevandezande/uv-cookiecutter">uv-cookiecutter</a> or <a href="https://github.com/jevandezande/pixi-cookiecutter">pixi-cookiecutter</a>, but that is for another post.</p>
+<h2 id="sources-and-further-reading">Sources and further reading</h2>
+<ul>
+<li><a href="https://www.pypa.io/en/latest/history">https://www.pypa.io/en/latest/history</a></li>
+<li><a href="https://pixi.sh/dev/concepts/conda_pypi">https://pixi.sh/dev/concepts/conda_pypi</a></li>
+<li><a href="https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions">https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions</a></li>
+</ul>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p><a href="https://www.bytesizego.com/blog/history-of-dependency-management-go">History of packaging in golang</a></p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p><a href="https://blog.rust-lang.org/2016/05/05/cargo-pillars/">Cargo: predictable dependency management</a></p>
+</div>
+
+    </div>
+
+    <footer class="post-footer">
+        <nav class="post-nav">
+            
+            <div></div>
+            
+
+            
+        </nav>
+    </footer>
+</article>
+
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="social-links">
+                    
+                    <a href="https://github.com/jevandezande" class="social-link" aria-label="GitHub" target="_blank" rel="noopener">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                    
+                    
+                    <a href="https://linkedin.com/in/jonathon-vandezande" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    
+                </div>
+                <p class="footer-copyright">&copy; 2026 Jonathon Vandezande. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script>
+    // Footnote tooltips with HTML support
+    document.querySelectorAll('.footnote-reference').forEach(sup => {
+        const link = sup.querySelector('a');
+        const id = link.getAttribute('href').slice(1);
+        const def = document.getElementById(id);
+        if (def) {
+            // Get HTML content (skip the label)
+            const p = def.querySelector('p');
+            const html = p ? p.innerHTML : def.innerHTML;
+
+            // Create tooltip element as sibling to link
+            const tooltip = document.createElement('span');
+            tooltip.className = 'footnote-tooltip';
+            tooltip.innerHTML = html;
+            sup.appendChild(tooltip);
+
+            // Prevent default only on the footnote number itself
+            link.addEventListener('click', e => {
+                if (e.target === link) {
+                    e.preventDefault();
+                }
+            });
+        }
+    });
+    // Hide footnote definitions at bottom
+    document.querySelectorAll('.footnote-definition').forEach(def => def.style.display = 'none');
+    </script>
+</body>
+</html>

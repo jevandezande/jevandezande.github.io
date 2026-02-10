@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://jevandezande.github.io/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/blog/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/blog/package-management-in-python/</loc>
+        <lastmod>2026-02-09</lastmod>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/blog/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/tags/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/tags/conda/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/tags/pixi/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/tags/pypi/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/tags/python/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/tags/uv/</loc>
+    </url>
+</urlset>
