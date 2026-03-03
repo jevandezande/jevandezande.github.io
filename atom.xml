@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-    <title>Jonathon Vandezande - Pixi</title>
+    <title>Jonathon Vandezande</title>
     <subtitle>Personal website and blog of Jonathon Vandezande</subtitle>
-    <link rel="self" type="application/atom+xml" href="https://jevandezande.github.io/tags/pixi/atom.xml"/>
+    <link rel="self" type="application/atom+xml" href="https://jevandezande.github.io/atom.xml"/>
     <link rel="alternate" type="text/html" href="https://jevandezande.github.io"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2026-03-03T00:00:00+00:00</updated>
-    <id>https://jevandezande.github.io/tags/pixi/atom.xml</id>
+    <id>https://jevandezande.github.io/atom.xml</id>
     <entry xml:lang="en">
         <title>Setting up Python Packages</title>
         <published>2026-03-03T00:00:00+00:00</published>

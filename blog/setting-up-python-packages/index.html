@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting up Python Packages | Jonathon Vandezande</title>
+    <meta name="description" content="How to set up Python Packages for faster development, better collaboration, and easier distribution.">
+    <meta name="author" content="Jonathon Vandezande">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Setting up Python Packages">
+    <meta property="og:description" content="How to set up Python Packages for faster development, better collaboration, and easier distribution.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;blog&#x2F;setting-up-python-packages&#x2F;">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://jevandezande.github.io/main.css">
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://jevandezande.github.io/rss.xml">
+
+    
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="site-header">
+            <div class="header-inner">
+                <a href="https://jevandezande.github.io/" class="site-title">Jonathon Vandezande</a>
+                <nav class="nav-menu">
+                    <a href="https://jevandezande.github.io/blog/" class="nav-link active">Blog</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="content-inner">
+                
+
+<article class="post">
+    <header class="post-header">
+        <h1 class="post-title">Setting up Python Packages</h1>
+        <div class="post-meta">
+            <span class="post-date">
+                <time datetime="2026-03-03">March 03, 2026</time>
+            </span>
+            
+            <span class="post-reading-time">13 min read</span>
+            
+        </div>
+        
+        <div class="post-tags">
+            
+            <a href="https://jevandezande.github.io/tags/python/" class="tag">Python</a>
+            
+            <a href="https://jevandezande.github.io/tags/pixi/" class="tag">Pixi</a>
+            
+            <a href="https://jevandezande.github.io/tags/pypi/" class="tag">PyPI</a>
+            
+            <a href="https://jevandezande.github.io/tags/uv/" class="tag">uv</a>
+            
+            <a href="https://jevandezande.github.io/tags/ruff/" class="tag">Ruff</a>
+            
+            <a href="https://jevandezande.github.io/tags/ty/" class="tag">ty</a>
+            
+            <a href="https://jevandezande.github.io/tags/github-actions/" class="tag">GitHub Actions</a>
+            
+        </div>
+        
+    </header>
+
+    <div class="post-content prose">
+        
+            
+            <p><em>A companion to my blog post on Rowan: <a href="https://rowansci.com/blog/how-to-make-a-great-open-source-scientific-project">How to Make a Great Open-Source Scientific Project</a>.</em></p>
+<p>Most people write Python code without ever setting up a proper project. Python is widely used for scripting and solving problems, and thus many programmers bring a scripting mentality to their software development. Because of this, many projects are poorly organized, difficult to maintain, and impossible to reuse as libraries in other projects. The mess that is Python package management compounds these problems (see <a href="/blog/package-management-in-python">my previous blog post</a>), and since Python tooling is incredibly fragmented, it can often be difficult to know how to best set up a project.</p>
+<p>I've maintained cookiecutters for the past four years with my opinions on how to best set up projects (with ones for <a href="https://github.com/jevandezande/pipenv-cookiecutter">pipenv</a>, <a href="https://github.com/jevandezande/poetry-cookiecutter">poetry</a>, <a href="https://github.com/jevandezande/pixi-cookiecutter">pixi</a>, and <a href="https://github.com/jevandezande/uv-cookiecutter">uv</a>), and wanted to share my reasoning behind why I organized these cookiecutters how I did, and why you should do the same.</p>
+
+            
+
+<nav class="toc" id="toc">
+    <button class="toc-toggle" aria-expanded="false" aria-controls="toc-list">
+        <span class="toc-title">Table of Contents</span>
+        <span class="toc-arrow">▶</span>
+    </button>
+    <ol class="toc-list" id="toc-list">
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#project-layout">Project layout</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#package-manager">Package manager</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#project-isolation">Project isolation</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#project-tools">Project tools</a>
+            
+            <ol class="toc-sublist">
+            
+                <li class="toc-item toc-item-h2">
+                    <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#formatting">Formatting</a>
+                    
+                </li>
+            
+                <li class="toc-item toc-item-h2">
+                    <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#linting">Linting</a>
+                    
+                </li>
+            
+                <li class="toc-item toc-item-h2">
+                    <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#typing">Typing</a>
+                    
+                </li>
+            
+                <li class="toc-item toc-item-h2">
+                    <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#unit-testing">Unit testing</a>
+                    
+                </li>
+            
+                <li class="toc-item toc-item-h2">
+                    <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#git-flow">Git flow</a>
+                    
+                </li>
+            
+            </ol>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#publishing-packages">Publishing packages</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#documentation">Documentation</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#licensing-code">Licensing code</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/setting-up-python-packages/#conclusion">Conclusion</a>
+            
+        </li>
+    
+    </ol>
+</nav>
+
+
+            
+<h2 id="project-layout">Project layout</h2>
+<p>There are two main ways for laying out packages, src/ and flat. One of the major reasons people tend to gravitate toward using <code>src/package_name</code> instead of just <code>package_name</code> is that it isolates project code. From the <a href="https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout">Python packaging user guide</a>:</p>
+<blockquote>
+<p>The src layout requires installation of the project to be able to run its code, and the flat layout does not.
+…
+[The flat layout] can lead to subtle misconfiguration of the project's packaging tooling, which could result in files not being included in a distribution.</p>
+</blockquote>
+<p>Most people never need to worry about these considerations, and a lot of major packages use the flat layout (e.g. <a href="https://github.com/numpy/numpy">NumPy</a>). I prefer the simplicity of the flat layout, but ultimately this often comes down to personal choice as opposed to there being an obvious right answer. My preferred layout for projects is as follows:</p>
+<pre data-lang="text" class="language-text "><code class="language-text" data-lang="text">- {package_name}&#x2F;  # Source code
+- notebooks&#x2F;       # Jupyter&#x2F;marimo notebooks
+- results&#x2F;         # Output from running the package
+- scripts&#x2F;         # Useful scripts for managing the package
+- static&#x2F;          # Holds input data
+- tests&#x2F;           # Unit tests
+- .github&#x2F;         # GitHub workflows, templates, etc.
+- LICENSE          # License indicating how code can be used
+- prek.toml        # Git hooks for pre-commit&#x2F;pre-push
+- pyproject.toml   # Package setup, tool management, etc.
+- README.md        # Information about your package and how to use it
+- {lockfile}.lock  # Precise set of packages to load
+- .coveragerc      # Information on how to assess code coverage
+- .editorconfig    # Information for the editor on how to format files
+- .env             # Private environment variables (add to .gitignore)
+- .envrc           # Handles automatic loading of the environment
+- .gitignore       # Tells Git which files to ignore (e.g. .env)
+</code></pre>
+<h2 id="package-manager">Package manager</h2>
+<p>Package managers download packages from the internet so that they can be used by your application. Good package managers allow you to download your set of packages on a per project basis (with smart caching under the hood), isolating the dependencies of each project from each other. Installing packages system-wide requires that all packages respect the dependencies of every other package, impeding upgrades and sometimes completely preventing the installation of new packages. Good package managers also provide lockfiles to ensure repeatable deployments and consistent environments.</p>
+<p>There are a lot of package managers out there; in my opinion, only uv and Pixi are up to the task of modern development and all packages should switch to them. Previous attempts at package managers didn't have lockfiles, took too long to solve for dependencies, the environment management was lacking, or were not PEP compliant. All of these features are necessary for productive usage. In my opinion, uv should be used if all the packages that you need are on PyPI; if you need conda packages, then use Pixi.</p>
+<h2 id="project-isolation">Project isolation</h2>
+<p>Along with the need for package managers to have a separate set of packages for each project, each project needs to be fully isolated from the world around it. The easiest way to do this is to set up a virtual environment, or to use your environment manager's built-in shell. Using <a href="https://direnv.net">direnv</a> can simplify this process by automatically loading you into the environment when you enter a directory. This avoids the problem of forgetting to activate it before trying to run something, and ensures that local environment variables don't pollute other projects accidentally (e.g. per-project private API keys). When you exit the directory, direnv automatically exits the environment and unloads environment variables.</p>
+<pre data-lang="text" class="language-text "><code class="language-text" data-lang="text"># Watch files for changes and reload the environment if modified
+watch_file uv.lock  # or pixi.lock
+watch_file .env
+
+# Load the variables in the .env file (if it exists)
+dotenv_if_exists .env
+
+# Load the uv environment
+uv sync --frozen --dev
+source .venv&#x2F;bin&#x2F;activate
+
+# Alternatively, load the pixi shell
+eval &quot;$(pixi shell-hook)&quot;
+</code></pre>
+<h2 id="project-tools">Project tools</h2>
+<p>The most important consideration for tools is that you shouldn't have to think about them. This means they need to be simple to use, fast, and easy to understand when they produce errors. Historically, a lot of Python tooling required complicated setup to use, and allowed an excessive number of configurable options. However, features are an antipattern: mirroring the <a href="https://peps.python.org/pep-0020">Zen of Python</a><sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<p>There should be one-- and preferably only one --obvious way to:</p>
+<ul>
+<li>Format code and documentation</li>
+<li>Lint code and documentation</li>
+<li>Type check</li>
+<li>Unit test and check code coverage</li>
+<li>Integration test if part of a larger application or package</li>
+<li>Acceptance, PR, merge checks</li>
+</ul>
+<p>Developers of a project should never need to think about their tooling; it should just run quickly and automatically. With the advent of LLM coding agents, the need for fast tools has increased, as they often make trivial mistakes and format inconsistently.</p>
+<h3 id="formatting">Formatting</h3>
+<p><a href="https://black.readthedocs.io/en/stable">Black</a> was released on Pi Day 2018 by Łukasz Langa "to provide a consistent style and take away opportunities for arguing about style."<sup class="footnote-reference"><a href="#2">2</a></sup>. It was opinionated about formatting and I didn't always agree with its choices. (I still maintain that tabs are better than spaces and that the 88 character line length is slightly too small<sup class="footnote-reference"><a href="#3">3</a></sup>.) However, it was fast and consistent, so I quickly switched to it to end all questions about how to format things. <a href="https://astral.sh/ruff">Ruff</a> has since replaced Black as my formatting tool due to its incredible speed (it maintains the same formatting style).</p>
+<h3 id="linting">Linting</h3>
+<p>Ruff has also adopted the functionality of many other tools, such as isort (for sorting imports in a standardized manner), and code linting (static code analysis to catch logic errors). Despite having coded with Python since 2009, I regularly make simple mistakes (and so do AI agents), and Ruff catches the vast majority of them. With the addition of docstring linting, it can even find missing arguments in docstrings and ensure that you conform to documentation writing-style standards.</p>
+<h3 id="typing">Typing</h3>
+<p>Type hinting was first released in Python 3.5, and is incredibly useful for improving the readability and maintainability of your code. Type checking can ensure that you don't run into type errors at runtime, or accidentally misuse duck typing. It also encourages cleaner code, by making multi-argument and return types explicit.</p>
+<p>Many different type checkers have been released for Python (e.g. mypy, pytype, pyre, and pyright). In my opinion <a href="https://github.com/astral-sh/ty">ty</a> and <a href="https://pyrefly.org">Pyrefly</a> represent the best combinations of speed and breadth of type support, being significantly faster than their competition. Now that ty is in beta and has mostly stabilized, it is my default type checker, and I recommend everyone upgrade from mypy unless you require mypy specific plugins (e.g. pydantic^[upgrading is still pretty easy]).</p>
+<h3 id="unit-testing">Unit testing</h3>
+<p>It is important that code does what the user thinks it does. Writing unit tests helps ensure that code works as expected, and that any changes do not disrupt the expected behavior. <a href="https://docs.pytest.org/en/stable">Pytest</a> is perhaps the most common unit testing framework, and makes it simple to write code to check your functions:</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">from pytest import raises, approx, mark
+
+def test_add() -&gt; None:
+    assert add(2, 2) == 4
+
+    # check approximate equivalence of floats
+    assert add(2.5, 3.9) == approx(7.4)
+
+    with raises(TypeError, match=&quot;Cannot add a str and an int&quot;)
+        add(&quot;a&quot;, 4)
+
+@mark.skip(&quot;Not yet implemented&quot;)
+def test_multiply() -&gt; None:
+    multiply(3, 4)
+</code></pre>
+<p>Tests can also be placed in documentation (see documentation section [add link]). This provides a useful indication of how a function should be used and a simple smoke test to indicate when something has gone horribly wrong. Writing comprehensive tests in doctests should be avoided due to the excessive verbosity, and the lack of formatting, linting, and type checking of them.<sup class="footnote-reference"><a href="#4">4</a></sup></p>
+<p>Checking that your codebase is adequately covered by unit tests is also useful. A simple <code>pytest --cov</code> will report how many of your lines of code are touched when running unit tests. Various sites exist that can report coverage; my default being <a href="https://codecov.io">codecov.io</a>, but I haven't performed a thorough enough examination of the options to provide a strong opinion.</p>
+<h3 id="git-flow">Git flow</h3>
+<p>Tracking the changes in your code through Git is helpful for working with others and finding where mistakes entered. The use of automated tooling to run checks on commits, PRs, and merges to master helps prevent bugs from sneaking into your codebase.</p>
+<p>Pre-commit hooks are tests that run on every commit (and possibly push). These should be fast checks that test if your code is correctly formatted, linted, and type checked, ensuring that merging it won't likely mess everything else up (I recommend <a href="https://prek.j178.dev">prek</a>, which is relatively new). It is important that these tests run quickly, otherwise developers will be tempted to skip them.</p>
+<p>Pull requests and merges to the master code branch should include a more complete set of tests, typically the above + unit tests and code coverage. Test matrices can be used to check against multiple versions of Python or multiple operating systems, the latter being particularly useful for multi-language projects. Large projects may split tests into a diet set of tests for PRs, and a more complete set that run when the PR is merged to master. If your project includes multiple semi-independent parts (e.g. a core library and a bunch of extension), you can have separate GitHub Actions workflows for different sections of the codebase, minimizing the number of tests that need to be run on each PR.</p>
+<h2 id="publishing-packages">Publishing packages</h2>
+<p>The simplest way to distribute your work and encourage others to use and build with it is to release it as a package. Packages are commonly released on PyPI or conda-forge, the latter often being favored for multi-language packages, those containing binary extensions, or OS-specific configurations. With the rise of Python wheels, most packages can be released on PyPI.</p>
+<p>Various front-end and backend tools exist for building and deploying packages. If using uv, <code>uv build</code> will trigger a configurable build backend that constructs the package (I prefer <a href="https://github.com/pypa/hatch/tree/master/backend">hatchling</a> as the build backend). <code>uv publish</code> uploads the package to PyPI for others to download and use. All of this can be placed in a GitHub Action to be triggered on a new version tag or a release.</p>
+<p>Regularly shipping new versions makes the task much easier each time, and makes any bugs that users find much simpler to fix by just releasing a new version with the correction. For normal-sized projects I recommend shipping a new version of your code for every 10–50 PRs—more often and it may become excessive noise for the users of your package (though some developers recommend publishing every new merge), less often and bug fixes and new features won't get to users fast enough.</p>
+<h2 id="documentation">Documentation</h2>
+<p>Documentation is useful for both the programmers and users of a package. Docstrings can be built to produce public documentation, and doctests can provide useful, runnable examples for users. They are also a great opportunity to ensure that the code you have written is clear; if the description of the features in the docstring gets too long, it is often an indication that the function is too complicated, and should probably be split into multiple functions.</p>
+<p>I prefer <a href="https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings">Google-style docstrings</a>, but there are many good options. Argument descriptions should be terse and leading articles should be avoided (e.g. drop <code>the</code> from <code>numerator: the number to be divided</code> since it is implicit). The docstrings should not contain type information, as that information is included as functions type hints, and types in docstrings can quickly become stale since static typing does not check them. Not everything needs a complete docstring; simple functions with good argument names often make full docstrings unnecessary, but when in doubt you should write a full docstring.</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">def divide(numerator: float, denominator: float) -&gt; float:
+    &quot;&quot;&quot;Divide numerator by denominator.
+
+    Args:
+        numerator: number to be divided (dividend)
+        denominator: number to divide by (divisor)
+
+    Returns:
+        result of division (quotient)
+
+    # `pytest --doctest-modules` will run this and check result
+    &gt;&gt;&gt; divide(4, 2)
+    2
+    &quot;&quot;&quot;
+</code></pre>
+<p>Documentation websites can be automatically generated from docstrings via tools like sphinx, providing a quick way for users of a package to understand functions, without requiring them to dig into the source code.</p>
+<h2 id="licensing-code">Licensing code</h2>
+<p>Even when source code is shared publicly, there is no inherent license for others to use and modify it. When publishing your code, you should pick a <a href="https://opensource.org/licenses?categories=popular-strong-community">standard license</a> (I recommend <a href="https://mit-license.org">MIT</a>) and place it in the same repository as your code so that others will know how they are allowed to interact with your code.</p>
+<p>There are numerous classes of less than free licenses that make interacting with your code difficult for commercial entities (see <a href="https://opensource.google/documentation/reference/thirdparty/licenses">Google's guide</a>
+for more). In my experience, copyleft licenses like GPL that restrict the ability to make derivative works without sharing them publicly discourage the use of such code due to potential liabilities. Many companies refuse outright to use GPL-licensed code, thus starving such open-source projects of exposure and contributions. Similarly, non-commercial licenses like ASL can have unexpected consequences; at Rowan we cannot benchmark ASL-licensed models in the papers that we publish, as <a href="https://opensource.google/documentation/reference/thirdparty/licenses#noncommercial">research carve-outs are generally not allowed</a>. In my opinion, licenses that restrict the usage of code to specific purposes are fundamentally against the spirit of open source, and should be avoided.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Setting up projects well takes significant work, but will have a lasting impact on your ability to develop and distribute code quickly. Standardizing setup and maintenance of your code with modern tooling will help minimize friction and allow you to easily check the code you (or your LLM agent) write. This is particularly important for organizations, where different individual styles with regard to formatting, linting, and tooling can lead to miscommunication and conflict, slowing down the process<sup class="footnote-reference"><a href="#5">5</a></sup> or leading to significant noise in commits due to changing styles.</p>
+<p>As a start, I recommend using my cookiecutters for <a href="https://github.com/jevandezande/uv-cookiecutter">uv</a> and <a href="https://github.com/jevandezande/pixi-cookiecutter">pixi</a> to set up all of your new code. Feel free to fork them for your organization's needs (I maintain separate internal versions with Rowan-specific setup) or contribute your own improvements so that we can all benefit. If you can't fully adopt all of the tooling and setup, I highly recommend using parts of the cookiecutters to slowly move your existing projects toward standardized tooling and setup.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>There should be one-- and preferably only one --obvious way to do it<br />Although that way may not be obvious at first unless you're Dutch.</p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>Much like <a href="https://black.readthedocs.io/en/stable/contributing">gofmt</a></p>
+</div>
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
+<p><a href="https://en.wikipedia.org/wiki/Wikipedia:Emerson_and_Wilde_on_consistency">I'm a big-brained hobgoblin</a></p>
+</div>
+<div class="footnote-definition" id="4"><sup class="footnote-definition-label">4</sup>
+<p><a href="https://github.com/jevandezande/file_iter/blob/master/file_iter/file_iter.py">Though I did it for fun once</a></p>
+</div>
+<div class="footnote-definition" id="5"><sup class="footnote-definition-label">5</sup>
+<p><a href="https://en.wikipedia.org/wiki/Law_of_triviality">Bike shedding</a></p>
+</div>
+
+        
+    </div>
+
+    <footer class="post-footer">
+        <nav class="post-nav">
+            
+
+            
+        </nav>
+    </footer>
+</article>
+
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="social-links">
+                    
+                    <a href="https://github.com/jevandezande" class="social-link" aria-label="GitHub" target="_blank" rel="noopener">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                    
+                    
+                    <a href="https://linkedin.com/in/jonathon-vandezande" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    
+                </div>
+                <p class="footer-copyright">&copy; 2026 Jonathon Vandezande. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="https://jevandezande.github.io/js/main.js" defer></script>
+</body>
+</html>

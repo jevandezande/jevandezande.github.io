@@ -25,7 +25,7 @@
     <div class="page-wrapper">
         <header class="site-header">
             <div class="header-inner">
-                <a href="https:&#x2F;&#x2F;jevandezande.github.io" class="site-title">Jonathon Vandezande</a>
+                <a href="https://jevandezande.github.io/" class="site-title">Jonathon Vandezande</a>
                 <nav class="nav-menu">
                     <a href="https://jevandezande.github.io/blog/" class="nav-link">Blog</a>
                 </nav>
@@ -44,23 +44,35 @@
     <div class="tags-list mt-xl">
         
         <a href="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;tags&#x2F;conda&#x2F;" class="tag">
-            conda (1)
+            Conda (1)
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;tags&#x2F;github-actions&#x2F;" class="tag">
+            GitHub Actions (1)
         </a>
         
         <a href="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;tags&#x2F;pixi&#x2F;" class="tag">
-            pixi (1)
+            Pixi (2)
         </a>
         
         <a href="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;tags&#x2F;pypi&#x2F;" class="tag">
-            pypi (1)
+            PyPI (2)
         </a>
         
         <a href="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;tags&#x2F;python&#x2F;" class="tag">
-            python (1)
+            Python (2)
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;tags&#x2F;ruff&#x2F;" class="tag">
+            Ruff (1)
+        </a>
+        
+        <a href="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;tags&#x2F;ty&#x2F;" class="tag">
+            ty (1)
         </a>
         
         <a href="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;tags&#x2F;uv&#x2F;" class="tag">
-            uv (1)
+            uv (2)
         </a>
         
     </div>
@@ -93,33 +105,6 @@
             </div>
         </footer>
     </div>
-    <script>
-    // Footnote tooltips with HTML support
-    document.querySelectorAll('.footnote-reference').forEach(sup => {
-        const link = sup.querySelector('a');
-        const id = link.getAttribute('href').slice(1);
-        const def = document.getElementById(id);
-        if (def) {
-            // Get HTML content (skip the label)
-            const p = def.querySelector('p');
-            const html = p ? p.innerHTML : def.innerHTML;
-
-            // Create tooltip element as sibling to link
-            const tooltip = document.createElement('span');
-            tooltip.className = 'footnote-tooltip';
-            tooltip.innerHTML = html;
-            sup.appendChild(tooltip);
-
-            // Prevent default only on the footnote number itself
-            link.addEventListener('click', e => {
-                if (e.target === link) {
-                    e.preventDefault();
-                }
-            });
-        }
-    });
-    // Hide footnote definitions at bottom
-    document.querySelectorAll('.footnote-definition').forEach(def => def.style.display = 'none');
-    </script>
+    <script src="https://jevandezande.github.io/js/main.js" defer></script>
 </body>
 </html>

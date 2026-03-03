@@ -14,10 +14,17 @@
         <loc>https://jevandezande.github.io/blog/page/1/</loc>
     </url>
     <url>
+        <loc>https://jevandezande.github.io/blog/setting-up-python-packages/</loc>
+        <lastmod>2026-03-03</lastmod>
+    </url>
+    <url>
         <loc>https://jevandezande.github.io/tags/</loc>
     </url>
     <url>
         <loc>https://jevandezande.github.io/tags/conda/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/tags/github-actions/</loc>
     </url>
     <url>
         <loc>https://jevandezande.github.io/tags/pixi/</loc>
@@ -27,6 +34,12 @@
     </url>
     <url>
         <loc>https://jevandezande.github.io/tags/python/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/tags/ruff/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/tags/ty/</loc>
     </url>
     <url>
         <loc>https://jevandezande.github.io/tags/uv/</loc>
