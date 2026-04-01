@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding with AI Agents | Jonathon Vandezande</title>
+    <meta name="description" content="or: How I learned to stop worrying and love the agents">
+    <meta name="author" content="Jonathon Vandezande">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Coding with AI Agents">
+    <meta property="og:description" content="or: How I learned to stop worrying and love the agents">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https:&#x2F;&#x2F;jevandezande.github.io&#x2F;blog&#x2F;agentic-coding&#x2F;">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://jevandezande.github.io/main.css">
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://jevandezande.github.io/rss.xml">
+
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+        ],
+        strict: false,
+        trust: true
+    });"></script>
+
+
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="site-header">
+            <div class="header-inner">
+                <a href="https://jevandezande.github.io/" class="site-title">Jonathon Vandezande</a>
+                <nav class="nav-menu">
+                    <a href="https://jevandezande.github.io/blog/" class="nav-link active">Blog</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="content-inner">
+                
+
+<article class="post">
+    <header class="post-header">
+        <h1 class="post-title">Coding with AI Agents</h1>
+        <div class="post-meta">
+            <span class="post-date">
+                <time datetime="2026-04-01">April 01, 2026</time>
+            </span>
+            
+            <span class="post-reading-time">20 min read</span>
+            
+        </div>
+        
+        <div class="post-tags">
+            
+            <a href="https://jevandezande.github.io/tags/ai-agents/" class="tag">AI Agents</a>
+            
+        </div>
+        
+    </header>
+
+    <div class="post-content prose">
+        
+            
+            <p>Coding with AI agents is here to stay. I've been using them for a while and wanted to share where they work well, where they still fall short, and how to get the most out of them.</p>
+
+            
+
+<nav class="toc" id="toc">
+    <button class="toc-toggle" aria-expanded="false" aria-controls="toc-list">
+        <span class="toc-title">Table of Contents</span>
+        <span class="toc-arrow">▶</span>
+    </button>
+    <ol class="toc-list" id="toc-list">
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/agentic-coding/#intro">Intro</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/agentic-coding/#ai-agent-abilities">AI agent abilities</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/agentic-coding/#personal-experience">Personal experience</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/agentic-coding/#how-i-use-agents-effectively">How I use agents effectively</a>
+            
+            <ol class="toc-sublist">
+            
+                <li class="toc-item toc-item-h2">
+                    <a href="https://jevandezande.github.io/blog/agentic-coding/#how-to-use-skills">How to use skills</a>
+                    
+                </li>
+            
+            </ol>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/agentic-coding/#how-to-run-ai-agents">How to run AI agents</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/agentic-coding/#which-ai-agents-i-use">Which AI agents I use</a>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/agentic-coding/#how-to-get-started">How to get started</a>
+            
+            <ol class="toc-sublist">
+            
+                <li class="toc-item toc-item-h2">
+                    <a href="https://jevandezande.github.io/blog/agentic-coding/#writing-agent-skills">Writing agent skills</a>
+                    
+                </li>
+            
+            </ol>
+            
+        </li>
+    
+        <li class="toc-item toc-item-h1">
+            <a href="https://jevandezande.github.io/blog/agentic-coding/#conclusion">Conclusion</a>
+            
+        </li>
+    
+    </ol>
+</nav>
+
+
+            
+<h2 id="intro">Intro</h2>
+<p>AI agents are excellent at reproducing the syntax and grammar of code. They can quickly write things that look like code, and unlike with human language, they can run it to confirm that it produces the desired effect. This immediate feedback loop has allowed the optimization of code generation in ways impossible with human language generation. While there are debates about whether AI agents truly understand code in the abstract<sup class="footnote-reference"><a href="#0">1</a></sup>, it is obvious that they can quickly write code that suffices for a wide variety of prompts.</p>
+<p>The problem with agents is that they often act like a junior dev who hasn't bothered to read the rest of your code or follow your company's standards; they just want to get the work done. Worse, they lack the context you could assume of even a junior hire: no access to your codebase history, code reviews, internal documentation, or lunch table conversations. They are also wont to take shortcuts: I have found them attempting to edit my linting rules so that they don't have to follow them, catch an import exception on a library and import something else, skip tests that they don't like, or claim they don't need to deal with pre-existing failures they were originally tasked with fixing.</p>
+<p>As such, I avoided AI-written code for a long time. It was great for exploring, but the code quality was often so poor that it took me more time to fix it than it did to write things from scratch. However, in the past six months with the advances in the latest models, improvements in how agents can now interact with code, and my development of a deeper understanding of how to harness agents, I've found myself now writing the majority of my code via agents. I expect them to continue to improve, but wanted to provide my thoughts on agents as I see them now and give advice on how you can best take advantage of their skills while minimizing their downsides.</p>
+<h2 id="ai-agent-abilities">AI agent abilities</h2>
+<p>Modern flagship AI agents are excellent at well-scoped, repetitive tasks for which they have large amounts of training data and context. They work flawlessly at recalling simple things, like Harry Potter's middle name (James), the syntax of Python's <a href="https://docs.python.org/3/library/concurrent.futures.html#processpoolexecutor">concurrent.futures.ProcessPoolExecutor</a> functions, or the equations for <a href="https://en.wikipedia.org/wiki/Bessel_function#Spherical_Bessel_functions:_jn,_yn">spherical Bessel functions</a>. They can easily perform simple tasks like renaming variables, moving code, and updating imports, or writing docstrings without the need for careful direction (e.g. <code>⟩ move files "save_*" to the save/ folder and drop save from the name"</code>, and it will also update all files that reference them). They can also perform more complicated tasks like writing regular expressions, making code more idiomatic, or running tests and updating values without additional human involvement.</p>
+<p>Agents are also excellent when working in someone else's codebase. Sometimes I come across open-source code that I need help understanding or needs significant improvement. I can ask an agent about which functions I should use, and what the side effects are, and then use it to write code with those functions. If the code is an open-source Python script, I often run a linter on it and have an agent fix any issues that it flags and add type hints to make understanding easier (there are also traditional programs that can generate type hints as well, e.g. <a href="https://github.com/dropbox/pyannotate">pyannotate</a> and <a href="https://pyrefly.org/en/docs/autotype/">pyrefly infer</a>).</p>
+<p>More complicated tasks require greater skill on the part of the user. Prompting an agent to "build a website" gives it nothing to work with: a static site generator is the wrong choice for a banking platform, and Drupal is overkill for a blog<sup class="footnote-reference"><a href="#1">2</a></sup>. For complicated tasks, the user needs to think carefully about the end goal and how it should be achieved before prompting the agent, otherwise it will go off in the wrong direction.</p>
+<h2 id="personal-experience">Personal experience</h2>
+<p>I use small AI agents for trivial tasks: locating things in a codebase, searching my config files, reminding me of obscure vim commands. Whatever free model is available on OpenCode often suffices. This is vastly superior to web-based chatbots, since the agent has access to all of my config files (warning: unless you run an agent completely locally, assume the model provider effectively knows everything on your computer).</p>
+<p>For writing code I use the leading models. Unlike searching or explaining, code generation requires significant upfront work to point the agent in the right direction and establish norms around libraries, code style, testing, and documentation. When I skip that, the agent tends to go down rabbit trails and produce a big ball of mud that fails at what I actually wanted.</p>
+<p>One of my first successful end-to-end AI coding experiences was for the production of graphics using the <a href="https://altair-viz.github.io">vega-altair</a> library. I'm a long-time matplotlib user (e.g. my <a href="http://github.com/jevandezande/spectra">spectra plotting library</a>), but I have many gripes with matplotlib's OOP style and mutable state. I wanted to switch to a more performant and declarative library for plotting, and chose vega-altair, but it has a completely different syntax from matplotlib. While it is very readable, I didn't want to have to memorize a new syntax just to make some graphics. I'd previously just copy-and-pasted code between my editor and my favorite chatbot, but this is ergonomically frustrating and doesn't scale well beyond scripts. Switching to an agent to write the code and then personally reading the edits made my transition to vega-altair easy. I didn't need to know the magic incantations to adjust the legend, change the stroke style, or add tickmarks; I could get the agent to write the actual code and view the results, tweaking things as necessary. Once the agent was finished with its edits, I could read through the code to make sure that everything was done as expected (one should always check that the agent doesn't accidentally throw out half of your data to make the process more efficient).</p>
+<p>This didn't mean I could turn my brain off, point it at my data, and tell it to make graphics. I still had to help it understand what data is important, what correlations need to be plotted, and how to make the graphs look good. The graphs it would suggest I should make would often be useless, but its intricate knowledge of the syntax (and ability to write it quickly) was the valuable part. With an agent, I could quickly look through my data, and pull out the interesting things (such as in my <a href="https://rowansci.com/blog/gpu4pyscf">GPU4PySCF blog</a>), while not worrying about my fat fingers typing the wrong thing or having to look up the specific syntax.</p>
+<p>There are still things that agents are bad at. I can't stand AI-generated writing. It’s not the clichés, it’s the bromides—in today’s fast-paced world of ever-evolving writing tools, I don’t need to delve deeply into their writing to give a nuanced description of all the nonsense phrasing—it’s just bad, but not for the reason many people think. The writing can be made to sound passable if you outline what you want to say and have the agent fill it out, but you will often spend more time trying to twist the agent’s words back to a semblance of good writing than if you had spent the time writing it yourself the first time, and will have learned less in the process.</p>
+<p>Sadly, the vast majority of AI writing I see does not even try that hard. LinkedIn is full of "Thought Leaders" who do little thinking beyond pointing an LLM at an article and asking for a summary "in my voice." Agents are happy to string together words, but without deeper thought behind the writing, the result regresses to empty phrases.</p>
+<p>Of course, I do appreciate AI tools for editing my writing and plan to integrate AI agents more tightly into my writing process. Agents can be very helpful for updating spelling and grammar, and even editing when used well (for more, check out this <a href="https://jasmi.news/p/ai-writing">excellent article on AI writing by Jasmine Sun</a>). However, I don’t think you can turn off your brain and get an AI to replace your writing (yet). Additionally, writing is an important part of the thinking process, and replacing thinking in the short term will hamstring you in the long term.</p>
+<h2 id="how-i-use-agents-effectively">How I use agents effectively</h2>
+<p>Given that AI agents often make mistakes and take shortcuts, I find it important to enforce strict guidelines on them. I do all of my coding inside of uv- or pixi-managed projects with numerous formatting, linting, and type-checking rules that run on every commit, PR, and merge to master. This enforces a very consistent style on the code, and helps agents produce higher quality code. Many of the errors made by agents can trivially be caught by good linting and type checking. I even have many of these hooks run every time an agent touches a file, providing them immediate feedback if their edits break things and immediately correcting their formatting. If I don't add these tools, it is common for their code to slowly degrade and for agents to take shortcuts that they shouldn't (they love adding <code>noqa</code> to code lines). In my experience, as the codebase grows the agents will tend to mirror the style in the codebase, leading to fewer corrections from the linter (though no less need for vigilance).</p>
+<p>I also provide agents with as much context as possible about how to write code, how to write docstrings, how to test code, and how to assist me in writing generalized documentation (see <a href="https://jevandezande.github.io/blog/agentic-coding/#how-to-use-skills">How to use skills</a>). The increased context helps keep the agents in line and on the right path. Explicitly telling them what they should do and what is bad code with simple examples quickly improves the quality of the code the agent produces.</p>
+<p>I almost always start in planning mode to map out what I want to accomplish. I iterate with the agent to understand the problem and come up with a plan. If it starts to go too far in the wrong direction, I'll clear the context and start over with a better initial prompt. Trying to redirect agents that have gone astray is difficult since the prior context keeps pulling them back toward the wrong path.</p>
+<p>Between tasks, I make sure to clear or compact the context as often as possible. AI agents "remember" the entire conversation (i.e. the context window), but the instructions at the beginning of the conversation slowly lose weight as the conversation lengthens. With growing context windows, I've noticed agents become increasingly forgetful of the instructions that I provide surrounding rules and norms. Near the end of context windows, it will often "forget" that I told it to avoid placing imports in functions or that I want everything in Ångström, not Bohr. I've even had it forget that it is in planning mode and start editing files.</p>
+<p>To work on larger tasks, I explicitly instruct it to create plans that are to be executed in stages, with all checks and tests running between sections and marked off in a <code>TODO.md</code> file. This allows easier context clearing between stages and recovery from failures. I see the problem of growing context window vs forgetting to be the biggest problem of the next year (I won't pontificate on the best way to fix it, but I expect to see increasing use of sub-agents and sub-sub-agents that will report their compacted findings up the chain).</p>
+<p>At the start of projects, I now spend significantly more time thinking about what I want to accomplish and writing it down. For new methods I want to implement, I'll iterate with the agent to perform research, condense that into a methodology document, have the agent write a spec from it, and then write the code. I craft skills for each of these stages (e.g. how to perform research, how to write $\LaTeX$, how to write tests), loading them in as needed to avoid bloating the context window with irrelevant instructions.</p>
+<h3 id="how-to-use-skills">How to use skills</h3>
+<p>Agent skills let you give the agent fine-grained instructions when it needs them, without filling up its context with irrelevant commands. They can give directions on the structure of your repository, your preferred packages, how to perform research, how to document code, etc. Since Anthropic (maker of Claude) pioneered skills, they are usually stored in <code>.claude/skills/*/SKILL.md</code>. I've written a few for my cookiecutters, including:</p>
+<ul>
+<li><code>/write-code</code> - instructions on how to write code; includes instructions like use <code>@dataclass(slots=True)</code> and other best practices, as well as tips on formatting code</li>
+<li><code>/write-docstrings</code> - instructions on how to write high-quality docstrings</li>
+<li><code>/write-method-docs</code> - instructions on how to write independent method documentation that covers the math and algorithms behind methodologies</li>
+<li><code>/write-tests</code> - instructions on how to write useful tests (and how not to write a bunch of useless tests)</li>
+</ul>
+<p>I highly recommend adapting these and making them your own<sup class="footnote-reference"><a href="#2">3</a></sup> (see <a href="https://jevandezande.github.io/blog/agentic-coding/#writing-agent-skills">Writing agent skills</a>), there is a lot of benefit in thinking deeply about how code should be written and organized.</p>
+<h2 id="how-to-run-ai-agents">How to run AI agents</h2>
+<p>I'm a Linux and Neovim guy who mostly uses a Framework laptop,<sup class="footnote-reference"><a href="#3">4</a></sup> so I almost exclusively run things via the CLI. Both the <a href="https://www.claudecli.org/">Claude</a> and <a href="https://opencode.ai/docs/cli/">OpenCode</a> CLI interfaces are great, but they are slightly different. OpenCode has a nice sidebar keeping track of context usage, tools used, task progress, edited files, and your location. Claude has a slightly simpler interface, but does a better job walking you through questions to update your plan. However, these observations are likely to be outdated soon, so I recommend regularly playing around with multiple options to see what you like. Both CLIs use slash commands (e.g. <code>/models</code>) to help you control the agent, swap models, ask questions, query usage, use skills, etc. I typically have a terminal open with the CLI-tool of choice and another terminal open so I can poke around at what the agent is doing (though I need to do that less often nowadays).</p>
+<p>Others run agents through their IDE. This makes it easy to both view the code while the agent edits it or immediately load the file (or section of file) into the agent's context for work/debugging. I've started experimenting with this in Neovim, but often prefer the pure-cli application.</p>
+<p>Nominally, Claude models use <code>CLAUDE.md</code> and <code>.claude/</code> for managing the knowledge and features of the model, while other models use <code>AGENTS.md</code>; functionally, every agent reads every other agent's stuff, and it is unclear exactly how much they share knowledge and features (considering that Claude skills are only <a href="https://claude.com/blog/skills">6 months old</a>, it's understandable that there isn't yet standardization).</p>
+<h2 id="which-ai-agents-i-use">Which AI agents I use</h2>
+<p><em>Ignore this section if more than three months after publishing, it will probably be woefully out of date.</em></p>
+<p>The leading LLMs are run on multiple industry-grade GPUs at a time, and I haven't had much success running smaller models on my laptop with only 64 GB of RAM, so I subscribe to numerous LLMs for various purposes. For agentic coding, I use the following based on where I have available credits:</p>
+<ul>
+<li>Claude (Anthropic)
+<ul>
+<li>Opus 4.6 - planning code</li>
+<li>Sonnet 4.6 - implementing code (my favorite model currently)</li>
+<li>Haiku 4.6 - implementing simple things or searching through stuff</li>
+</ul>
+</li>
+<li>Gemini (Google)
+<ul>
+<li>Gemini 3.1 Pro - everything</li>
+</ul>
+</li>
+<li>GPT (OpenAI)
+<ul>
+<li>GPT 5.4 - everything except writing documentation, but I don't like the code it produces as much and I have strong distaste for GPT's writing style (perhaps because I see it everywhere on LinkedIn)</li>
+</ul>
+</li>
+<li>Others
+<ul>
+<li>Big Pickle (current free model on OpenCode Zen) - implementing repetitive simple things and searching through stuff like my Neovim config</li>
+</ul>
+</li>
+</ul>
+<p>Currently, my preferred setup is to use Opus 4.6 for planning and Sonnet 4.6 for coding as Opus is better at reasoning, while Sonnet is faster and cheaper. I'm subscribed to the Claude Pro plan, but I constantly hit my 5-hour and weekly limits, so I often switch to other providers. GitHub has a large number of models available, and provides all credits at the beginning of the month. Google often pauses Gemini usage due to systems "overheating", making it frustrating to use, but I'm content with the code quality. OpenCode sometimes randomly freezes, but I haven't been able to figure out why. Claude-cli often asks for too fine-grained of permission, typically in its pursuit of not putting too much information into the context window.</p>
+<h2 id="how-to-get-started">How to get started</h2>
+<p>A great way to get started is to have the agent implement something you know well and of tractable size (e.g. build a method to generate molecular conformers with RDKit and then optimize with xtb). I've added agent skills to my <a href="https://github.com/jevandezande/uv-cookiecutter">uv</a> and <a href="https://github.com/jevandezande/pixi-cookiecutter">pixi</a> cookiecutters to help you get started. Spend some time thinking about what you want to implement and write a few paragraphs of details. Enter planning mode and ask the agent what it thinks of your plan and how it would improve it. Iterate for a few rounds until its plan aligns with your goals. Then clear the context and let it implement. Once done, read through the implementation and note where it did things you didn't want.</p>
+<p>This will clarify where the agent falls short and how to direct it better. For recurring preferences, add sections to your code-writing skill (e.g. "use polars instead of pandas", "don't use matplotlib"). Then reuse those skills on a fresh implementation of the same task and observe how the agent's patterns change. As you improve, you'll spend more time refining your skills and less time correcting the agent mid-task.</p>
+<h3 id="writing-agent-skills">Writing agent skills</h3>
+<p>The skills in my cookiecutters are rudimentary. Writing your own will give you deeper insight into how agents "think" and how to express your goals clearly. Before starting a project, spend time optimizing the skills for what you want to accomplish; specifying preferred libraries, formatting, and success criteria goes a long way toward getting useful code without constantly fighting the agent. When I find it going off track, I'll often update my skills and restart the task.</p>
+<p><code>SKILL.md</code> files consist of a metadata section, which indicates to the agent when to use the skill, and a body, which contains the content of the skill. Anthropic has a <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices">guide to writing skills</a> (<a href="https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf?hsLang=en">simpler pdf version</a>) that is well worth a read. Your agent has also read it and is the best resource for helping you develop better skills. Enter planning mode and discuss what you hope to accomplish and how you want to encourage your agent to do so. Then have it make a plan to build skills with you.</p>
+<p>When writing skills, expressing general principles matters more than enumerating every good and bad combination. For my <code>/write-docstrings</code> skill, I specify a modified Google docstring style and provide one correct and one incorrect example. From that, the agent does a reasonable job staying within my preferred style.</p>
+<p>You can bundle content with a skill, such as reference documentation, code structure, algorithm details, and papers that get loaded as needed, though I often find a basic <code>SKILL.md</code> is adequate. More content in a skill uses a larger amount of the context window, and repeating the same thing in multiple ways doesn't necessarily make the skill have more lasting power. Skills should endeavor to be brief, allowing them to be loaded into the context window in a timely manner and not flooding the context window with superfluous information.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Coding with AI agents is fundamentally reshaping the discipline of software development. It is a significant boon to already effective coders, leveraging their understanding of code design by accelerating the pace at which it can be written and rewritten. For unskilled programmers or those unfamiliar with a library or framework, it can also be a great help, enabling them to work with things they have never done before, but caution should be exercised.</p>
+<p>So far, the true benefits of AI agents have accrued to those who already have coding expertise; the promise of an untrained programmer giving an agent a simple prompt and having it build complex infrastructure has not yet materialized. Experts can now ship much faster without needing to worry about minutiae of syntax; it does not yet free one from needing to understand the code that the agent has written, merely the need to write it. Agents also enable quick iteration on coding plans, bringing up obscure sections of code and how it will need to change to accommodate the goal; I've done refactors in ten minutes that I would never previously have considered if I had all day. Agentic coding is not an invitation to turn your brain off and have it do your work for you, but to think more deeply about the larger problems at hand without getting mired in syntax. So far, agentic coding is like a switch from hand-writing to writing on a computer; you still need to provide the content and thought, you can just go more quickly without needing to worry about hand-crafting the letters.</p>
+<p>Sadly, I expect many of the coming AI-written codebases to be <a href="https://www.laputan.org/mud">giant balls of mud</a>. Unless care is taken to maintain a well-defined structure to the code in the face of the deluge of new features, many codebases will quickly start to drown. Shoddily implemented features will bury us, while ironically becoming load-bearing for random other parts of our projects. Yet perhaps in our code's potential devastation also lies an opportunity; agents can also be wielded to help bail us out of this coming mess with constant refactoring and code-quality improvement, but only if we take care to use them well.</p>
+<aside class="acknowledgements">
+  <p>Thanks to my coworkers at Rowan for our friendly arguments about agentic coding, and for putting up with my obsession over code quality. Particular thanks to Eli and Corin for helpful comments on this blog post.</p>
+</aside>
+<div class="footnote-definition" id="0"><sup class="footnote-definition-label">1</sup>
+<p>e.g. this paper showing their failure when coding in esoteric languages they haven't been optimized for: <a href="https://arxiv.org/abs/2603.09678">arxiv.org/abs/2603.09678</a></p>
+</div>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">2</sup>
+<p>BTW, I use <a href="https://www.getzola.org">Zola</a></p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">3</sup>
+<p>One should never blindly run skills from others, that is a perfect attack vector and I expect we will see some very embarrassing things happen in this regard in the near future.</p>
+</div>
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">4</sup>
+<p>I also grudgingly own a Mac because they have incredible battery life, the best processors, great build quality, good speakers, etc.</p>
+</div>
+
+        
+    </div>
+
+    <footer class="post-footer">
+        <nav class="post-nav">
+            
+
+            
+        </nav>
+    </footer>
+</article>
+
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="social-links">
+                    
+                    <a href="https://github.com/jevandezande" class="social-link" aria-label="GitHub" target="_blank" rel="noopener">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                    
+                    
+                    <a href="https://linkedin.com/in/jonathon-vandezande" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    
+                </div>
+                <p class="footer-copyright">&copy; 2026 Jonathon Vandezande. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="https://jevandezande.github.io/js/main.js" defer></script>
+</body>
+</html>

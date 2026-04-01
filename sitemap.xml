@@ -7,6 +7,10 @@
         <loc>https://jevandezande.github.io/blog/</loc>
     </url>
     <url>
+        <loc>https://jevandezande.github.io/blog/agentic-coding/</loc>
+        <lastmod>2026-04-01</lastmod>
+    </url>
+    <url>
         <loc>https://jevandezande.github.io/blog/package-management-in-python/</loc>
         <lastmod>2026-02-09</lastmod>
     </url>
@@ -19,6 +23,9 @@
     </url>
     <url>
         <loc>https://jevandezande.github.io/tags/</loc>
+    </url>
+    <url>
+        <loc>https://jevandezande.github.io/tags/ai-agents/</loc>
     </url>
     <url>
         <loc>https://jevandezande.github.io/tags/conda/</loc>
